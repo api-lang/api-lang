@@ -9,6 +9,14 @@
 5. 编写的同时还有友好的提示、校验、报错
 6. 在线运行 sdk 库, 编写到哪个接口能运行哪个接口, 所见即所得 (就像 [dumi](https://d.umijs.org/))
 
+## 如何编写 api-lang 文档
+
+[doc](/API_LANG_DOC.md)
+
+## 快速入门: 脚手架的使用
+
+[doc](/CLI.md)
+
 ## 什么是 api-lang
 
 - `api-lang` 是上述功能的框架名
@@ -60,16 +68,6 @@ api-lang 顾名思义，用于描述 api。命名借鉴于 [bilibili-API-collect
 为什么不直接用 AML, 而要支持少量的编程:
 
 每套 api 的 sdk 本身就包含着自己的逻辑, 比如 bilibili2023, 需要拦截所有的请求, 在每个请求头的 cookie 插入制定的字段和值
-
-## api-lang 文档 怎么编写
-
-有现成的例子可以参考: [@api-lang/bili-api](https://github.com/api-lang/bili-api) 下的 api-lang 目录
-
-TODO
-
-## cli 脚手架的使用
-
-TODO
 
 ## v1 的 TODO-LIST
 
