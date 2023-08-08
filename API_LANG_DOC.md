@@ -48,7 +48,7 @@ api-lang.config.json
 
 ```
 api-lang // 根目录, 叫什么都可以, 推荐统一用 `api-lang` 命名
-  __api-lang-root__.ts // meta文件, 用于描述整个api-lang文档, 根目录下必须有
+  __api-lang-root__.ts // meta文件, 用于描述整个api-lang文档
   user // group, 用户组, group一定是目录
     __group__.ts // meta文件, 用于描述group, group目录下必须有
     myInfo.ts // module文件, 对应单个api
@@ -70,6 +70,12 @@ build 后的 sdk: 调用为 `apiKit.user.myInfo(...)` and `apiKit.healthy(...)` 
 暂无, 可以不创建这个文件
 
 ## `__api-lang-root__.ts`
+
+该文件可以没有, 也可以不导出任何类型和数据
+
+导出的有效类型有: BasicApi
+
+导出的有效数据有: VERSION、init
 
 ```typescript
 import type { AxiosInstance } from "axios";
@@ -115,6 +121,12 @@ export const init = (axios: AxiosInstance, ctx: Ctx) => {
 ```
 
 ## `__group__.ts`
+
+```typescript
+export const GROUP_DOC_NAME = "视频";
+export const GROUP_TS_NAME = "video";
+export const GROUP_ORDER = 3;
+```
 
 ## `module` 文件
 
