@@ -1,16 +1,18 @@
-import crypto from "crypto";
-import type { AxiosInstance, AxiosProxyConfig } from "axios";
+import type { AxiosInstance } from "axios";
 
-export const VERSION = "1.0.0";
+// 当前api的版本, 可以是任意字符串, 建议用年月份区分版本
+// 比如bilibili-api在2023与2022年的api变化很大, 2023年的api不能兼容2022年, 就需要更新版本号, 如果是渐进式的增加api能力, 能兼容之前的api, 那就不需要更新版本号
+export const VERSION = "2023.01";
 
-export type BasicApi<T = unknown> = {
+// 通用的response结构
+export type BasicApi<T> = {
   /** 0为成功 */
-  code: 0 | (number & {});
+  code: number;
   data: T;
   message: string;
-  ttl: 0 | 1;
 };
 
+// 自定义的数据及数据结构
 interface Ctx {
   credential?: {
     sessdata: string;
@@ -20,81 +22,19 @@ interface Ctx {
   proxy?: AxiosProxyConfig;
 }
 
-export const init = (credential?: Ctx["credential"]): Ctx => {
-  return { credential };
-};
-
-export const interceptors = (axios: AxiosInstance, ctx: Ctx) => {
+// 初始化, 对应的就是 `sdk.init(ctx: Ctx);`
+export const init = (axios: AxiosInstance, ctx: Ctx) => {
+  // 请求拦截, 相当于中间件做数据处理
   axios.interceptors.request.use((config) => {
-    const { headers, jar: oldCookieJar, proxy } = config;
-    const cookieJar = oldCookieJar!.cloneSync();
-    const { credential } = ctx;
-
-    // headers
-    if (!headers.has("user-agent")) {
-      headers.set("user-agent", "Mozilla/5.0");
-    }
-    if (!headers.has("referer")) {
-      headers.set("referer", "https://www.bilibili.com/");
-    }
-
-    // responseType
-    if (!config.responseType) config.responseType = "json";
-
-    // credential
-    if (credential) {
-      cookieJar.setCookieSync(
-        `SESSDATA=${credential.sessdata}; Domain=.bilibili.com`,
-        "https://www.bilibili.com"
-      );
-      cookieJar.setCookieSync(
-        `bili_jct=${credential.bili_jct}; Domain=.bilibili.com`,
-        "https://www.bilibili.com"
-      );
-      cookieJar.setCookieSync(
-        `DedeUserID=${credential.dedeuserid}; Domain=.bilibili.com`,
-        "https://www.bilibili.com"
-      );
-    }
-    cookieJar.setCookieSync(
-      `buvid3=${crypto.randomUUID()}; Domain=.bilibili.com`,
-      "https://www.bilibili.com"
-    );
-    config.jar = cookieJar;
-
-    // csrf
-    if (credential) {
-      if (headers["Content-Type"] === "application/x-www-form-urlencoded") {
-        if (config.data === undefined) {
-          config.data = "";
-        }
-        if (typeof config.data === "string") {
-          config.data += `$csrf=${credential.bili_jct}&csrf_token=${credential.bili_jct}`;
-        }
-      } else {
-        if (config.data === undefined) {
-          config.data = {};
-        }
-        if (
-          typeof config.data === "object" &&
-          config.data["csrf"] === undefined &&
-          config.data["csrf_token"] === undefined
-        ) {
-          config.data["csrf"] = credential.bili_jct;
-          config.data["csrf_token"] = credential.bili_jct;
-        }
-      }
-    }
-
-    // proxy
-    if (!proxy && ctx.proxy) {
-      config.proxy = ctx.proxy;
-    }
-
+    // cookie的操作: https://github.com/salesforce/tough-cookie
+    config.jar.setCookieSync(...);
+    // 其它操作: https://github.com/axios/axios
+    config.headers.set(...);
+    config.proxy = ctx.proxy;
+    ...
     return config;
   });
-  axios.interceptors.response.use((response) => {
-    return response.data;
-  });
+  // 响应拦截
+  axios.interceptors.response.use((response) => response.data);
   return axios;
 };

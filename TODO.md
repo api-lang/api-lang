@@ -5,6 +5,7 @@
 - ApiRequestHeader 类型声明与校验
 - verify 逻辑抽离
 - 数据互通至 单独 request 的 Ctx
+- sdk.VERSION
 - 解决目前只支持固定目录结构的问题
 - 除了 b 站，多接入几个平台，看看哪些地方没考虑到，尽量做到更通用
 
