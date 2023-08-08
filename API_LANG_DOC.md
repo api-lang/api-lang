@@ -15,7 +15,9 @@
 3. meta
 4. help
 
-api 有组的划分, 比如 登陆注册、获取用户信息 都属于 用户组, 这里将组称为 `group`、单个 api 称为 `module`
+单个 api 对应的文件称为 `module`
+
+`group` 是对 `module` 的划分, 比如 登陆注册、获取用户信息 都属于 用户组, 这里将组称为 `group`. 当然, 可以有游离在 `group` 之外的 `module`
 
 `meta` 是用于描述整个 `api-lang文档`、`group`、`module` 的描述性文件
 
@@ -50,7 +52,7 @@ api-lang // 根目录, 叫什么都可以, 推荐统一用 `api-lang` 命名
   user // group, 用户组, group一定是目录
     __group__.ts // meta文件, 用于描述group, group目录下必须有
     myInfo.ts // module文件, 对应单个api
-  healthy.ts // module
+  healthy.ts // 游离在 `group` 之外的 `module`
   groupA
     __group__.ts
     groupB
