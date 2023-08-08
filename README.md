@@ -9,7 +9,7 @@
 5. 编写的同时还有友好的提示、校验、报错
 6. 在线运行 sdk 库, 编写到哪个接口能运行哪个接口, 所见即所得 (就像 [dumi](https://d.umijs.org/))
 
-## 如何编写 api-lang 文档
+## 如何编写 `api-lang文档`
 
 [doc](/API_LANG_DOC.md)
 
@@ -36,7 +36,7 @@ api-lang 顾名思义，用于描述 api。命名借鉴于 [bilibili-API-collect
 
 所以我的目的就是:
 
-1. 能方便地编写一整套按规则编写的 api 文档
+1. 能方便地编写一整套按规则编写的 `api-lang文档`
 2. 能自动生成一整套可读的文档 (如 markdown)
 3. 直接生成 api 的 sdk 库 (支持各大主流语言)
 
