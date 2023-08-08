@@ -50,7 +50,7 @@ api-lang.config.json
 api-lang // 根目录, 叫什么都可以, 推荐统一用 `api-lang` 命名
   __api-lang-root__.ts // meta文件, 用于描述整个api-lang文档
   user // group, 用户组, group一定是目录
-    __group__.ts // meta文件, 用于描述group, group目录下必须有
+    __group__.ts // meta文件, 用于描述group, group目录下必须有, 没有 __group__.ts 的目录只是普通的目录
     myInfo.ts // module文件, 对应单个api
   healthy.ts // 游离在 `group` 之外的 `module`
   groupA
